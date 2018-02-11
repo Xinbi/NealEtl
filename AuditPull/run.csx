@@ -10,6 +10,8 @@ public static void Run(TimerInfo myTimer, TraceWriter log)
     string clientSecret = System.Configuration.ConfigurationManager.ConnectionStrings["ClientSecret"].ConnectionString;
     string tenant = System.Configuration.ConfigurationManager.ConnectionStrings["Tenant"].ConnectionString;
     string clientId = System.Configuration.ConfigurationManager.ConnectionStrings["ClientId"].ConnectionString;
+    string recordsToProcess =  System.Configuration.ConfigurationManager.ConnectionStrings["recordsToProcess"].ConnectionString;
+    recordsToProcess = String.IsNullOrEmpty(recordsToProcess) ? "20" : recordsToProcess;
 	int daysToRetrieve;
 	daysToRetrieve = 7;
 	
@@ -20,7 +22,7 @@ public static void Run(TimerInfo myTimer, TraceWriter log)
 		{
 			
 			var result =
-				O365ETL.GetOfficeData.Process(clientId, clientSecret, tenant, dateToProcess, connstring, schema).Result;
+				O365ETL.GetOfficeData.Process(clientId, clientSecret, tenant, dateToProcess, connstring, schema, recordsToProcess).Result;
 
 		}
 		catch (Exception ex)
